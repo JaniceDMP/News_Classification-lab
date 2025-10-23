@@ -61,8 +61,6 @@ En esta tarea, usamos los modelos entrenados en inglés para clasificar noticias
     * **DeBERTa (F1: 0.8222):** Su alta puntuación sugiere que su arquitectura avanzada (`mdeberta-v3-base`) capturó el *concepto semántico* de las categorías (ej. qué "es" Business) de una forma que trasciende el idioma y la tarea.
     * **DistilBERT (F1: 0.6667):** Tuvo un desempeño moderado.
     * **RoBERTa (F1: 0.5556):** Tuvo el F1-Score más bajo, mostrando la mayor discrepancia. Esto sugiere que, aunque es multilingüe (`xlm-roberta-base`), su generalización *cross-lingual* en esta tarea fue menos robusta y su "lógica" de clasificación difirió significativamente de la del LLM Zero-Shot.
-    * 
-**Los siguientes resultados están basados en la comparación contra el LLM "Mock".**
 
 ### Resultados vs. LLM Mock
 
