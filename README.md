@@ -27,32 +27,6 @@ En el *task* principal de clasificación de AG News (inglés), los resultados de
 
 ## 2. Bonus Task: Alineamiento con LLM (RPP News en Español)
 
-Este proyecto entrena y compara tres modelos Transformer multilingües (RoBERTa, DeBERTa y DistilBERT) en el dataset de clasificación de noticias AG News (en inglés).
-
-Además, evalúa la capacidad de estos modelos para clasificar noticias en español (del feed de RPP) en un escenario de transferencia de conocimiento *zero-shot*. Debido a limitaciones de acceso y cuota de API, se utilizó un **LLM "mock" simulado** (una función basada en palabras clave) como referencia "ground-truth" para el *bonus task*.
-
-## 1. Rendimiento en AG News (Test Set)
-
-
-
-En el *task* principal de clasificación de AG News (inglés), los resultados del set de pruebas (test set) fueron los siguientes:
-
-| Modelo | F1-Score (Weighted) |
-| :--- | :--- |
-| **DeBERTa** | ~0.931 |
-| **RoBERTa** | ~0.929 |
-| **DistilBERT** | ~0.921 |
-
-*(Los resultados exactos pueden variar ligeramente entre ejecuciones)*
-
-**Interpretación:**
-* **Todos los modelos son robustos:** Con solo 2 *epochs* de entrenamiento y una muestra de datos, todos los modelos superaron el 92% de F1-Score, lo que demuestra su gran capacidad de aprendizaje.
-* **DeBERTa (microsoft/mdeberta-v3-base) fue el ganador,** aunque por un margen muy estrecho sobre RoBERTa. Su arquitectura avanzada a menudo le da una ventaja en tareas de comprensión del lenguaje.
-* **DistilBERT** quedó ligeramente por detrás, lo cual es esperado. Es un modelo "destilado" (más pequeño y rápido) y sacrifica un pequeño porcentaje de precisión a cambio de una eficiencia mucho mayor.
-
----
-## 2. Bonus Task: Alineamiento de Modelos (RPP News en Español)
-
 En esta tarea, usamos los modelos entrenados en inglés para clasificar noticias en español. El desafío principal fue generar las etiquetas "ground-truth" para las noticias de RPP.
 
 ### Metodología del "Ground-Truth"
@@ -64,8 +38,6 @@ En esta tarea, usamos los modelos entrenados en inglés para clasificar noticias
 **Los siguientes resultados están basados en la comparación contra el LLM "Mock".**
 
 ### Resultados vs. LLM Mock
-
-
 
 Los resultados de esta comparación *zero-shot* fueron sorprendentes:
 
