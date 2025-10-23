@@ -56,5 +56,8 @@ Los resultados de esta comparación *zero-shot* fueron sorprendentes:
     **DeBERTa (mdeberta-v3-base) se alineó perfectamente (F1-Score de 1.0)** con nuestro *ground-truth* simulado. Esto significa que sus predicciones (`[2, 1, 3, 0, 2, 2]`) fueron *idénticas* a las reglas definidas en el "mock" (`[2, 1, 3, 0, 2, 2]`).
 
 3.  **¿Por qué las discrepancias?**
-    * **DistilBERT (`[2, 1, 3, 0, 3, 2]`)**: Falló en la noticia de Nvidia (Índice 4). La clasificó como `3` (Sci/Tech), mientras que el "mock" la clasificó como `2` (Business). Esto es comprensible, ya que la noticia menciona "chips" e "inteligencia artificial" (Sci/Tech) pero también "acciones" y "empresa" (Business). El "mock" priorizó "Business" y DistilBERT priorizó "Sci/Tech".
-    * **RoBERTa (`[2, 1, 3, 2, 2, 2]`)**: Falló en la noticia del Congreso (Índice 3). La clasificó como `2` (Business) en lugar de `0` (World/Política). Este es un error de clasificación más claro, que resultó en el F1-Score más bajo.
+    Las discrepancias entre los modelos y el "mock" se deben a varios factores:
+
+* **Dominio vs. Idioma (Domain vs. Language):** El problema principal. Nuestros modelos fueron *afinados* (fine-tuned) en `AG News`, un dataset de noticias *globales* y *anglosajonas*. Las noticias de `RPP` son *peruanas*, con un contexto local (ej. "Congreso", "MEF", "Paolo Guerrero").
+* **Ambigüedad del Contexto Local:** Un modelo puede confundirse. Podría ver "Congreso aprueba reforma" y dudar si es "World" (Política) o "Business".
+* **Simpleza del "Mock":** Nuestro LLM "mock" es muy simple y se basa solo en palabras clave (ej. "dólar" -> "Business"). Un LLM real (como GPT-4) entendería el *contexto* y el matiz, mientras que nuestros modelos Transformer (como DeBERTa) pueden captar un contexto que el "mock" ignora, lo que lleva a discrepancias.
