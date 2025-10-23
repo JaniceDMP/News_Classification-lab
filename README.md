@@ -12,15 +12,15 @@ En el *task* principal de clasificación de AG News (inglés), los resultados de
 
 | Modelo | F1-Score (Weighted) |
 | :--- | :--- |
-| **DeBERTa** | ~0.931 |
-| **RoBERTa** | ~0.929 |
-| **DistilBERT** | ~0.921 |
+| **DeBERTa** | ~0.911 |
+| **RoBERTa** | ~0.918 |
+| **DistilBERT** | ~0.908 |
 
 *(Los resultados exactos pueden variar ligeramente entre ejecuciones)*
 
 **Interpretación:**
-* **Todos los modelos son robustos:** Con solo 2 *epochs* de entrenamiento y una muestra de datos, todos los modelos superaron el 92% de F1-Score, lo que demuestra su gran capacidad de aprendizaje.
-* **DeBERTa (microsoft/mdeberta-v3-base) fue el ganador,** aunque por un margen muy estrecho sobre RoBERTa. La arquitectura de DeBERTa, que desacopla la atención del contenido y la posición, a menudo le da una ventaja en tareas de comprensión del lenguaje.
+* **Todos los modelos son robustos:** Con solo 2 *epochs* de entrenamiento y una muestra de datos, todos los modelos superaron el 90% de F1-Score, lo que demuestra su gran capacidad de aprendizaje.
+* **RoBERTa fue el ganador,** aunque por un margen muy estrecho sobre DeBERTa. Aunque, la arquitectura de DeBERTa, que desacopla la atención del contenido y la posición, a menudo le da una ventaja en tareas de comprensión del lenguaje.
 * **DistilBERT** quedó ligeramente por detrás, lo cual es esperado. Es un modelo "destilado" (más pequeño y rápido) y sacrifica un pequeño porcentaje de precisión a cambio de una eficiencia mucho mayor.
 
 ---
@@ -42,7 +42,7 @@ Se utilizó un modelo "ground-truth" (simulado o un pipeline zero-shot) para gen
 ### Discusión y Análisis
 
 **1. ¿Son consistentes las predicciones?**
-Sí. Los resultados (especialmente de DeBERTa y RoBERTa) muestran una capacidad sorprendente para aplicar el conocimiento aprendido en inglés a un idioma que nunca vieron durante el *fine-tuning* (español).
+Sí. Los resultados (especialmente de DeBERTa y RoBERTa) muestran una excelente capacidad para aplicar el conocimiento aprendido en inglés a un idioma que nunca vieron durante el *fine-tuning* (español).
 
 **2. ¿Qué modelo se alinea mejor?**
 **DeBERTa (mdeberta-v3-base)** es el que mejor se alinea. Esto es consistente con su rendimiento superior en el *test set* de AG News. Su pre-entrenamiento multilingüe (cubriendo 100+ idiomas) y su arquitectura avanzada le permiten generalizar mejor los "conceptos" de las categorías (ej. "Negocios" o "Deportes") independientemente del idioma.
