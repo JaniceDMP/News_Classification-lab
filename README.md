@@ -35,6 +35,33 @@ En esta tarea, usamos los modelos entrenados en inglés para clasificar noticias
 2.  **Modelo LLM Zero-Shot (Gratuito):** Se exploró una alternativa gratuita usando un *pipeline* `zero-shot-classification` de Hugging Face (ej. `facebook/bart-large-mnli`). Este es un LLM real que corre en Colab y clasifica el texto en las categorías dadas.
 3.  **LLM "Mock" (Simulación):** Para garantizar la reproducibilidad y evitar fallos de descarga o `try/except`, se optó finalmente por un **LLM "Mock" simulado**. Esta es una función simple basada en palabras clave (ej. "dólar" -> "Business") para generar las etiquetas de forma consistente.
 
+### Resultados vs. LLM Zero-Shot (Hugging Face)
+
+
+
+| Modelo | F1-Score (vs LLM Zero-Shot) |
+| :--- | :--- |
+| **DeBERTa** | **0.8222** |
+| **DistilBERT** | 0.6667 |
+| **RoBERTa** | 0.5556 |
+
+### Discusión y Análisis
+
+1.  **¿Son consistentes las predicciones?**
+    La consistencia varía. DeBERTa muestra una **alta consistencia** (F1 > 0.82), lo que indica que su lógica de clasificación (aprendida del inglés en AG News) es muy similar a la lógica de inferencia del LLM Zero-Shot. Los otros modelos muestran una consistencia mucho menor.
+
+2.  **¿Qué modelo se alinea mejor?**
+    **DeBERTa (mdeberta-v3-base)** se alinea significativamente mejor. Este es el hallazgo clave: el modelo que ganó en el *test set* de AG News (inglés) también es el que mejor generaliza su conocimiento al español y se alinea con la lógica de un LLM de inferencia (NLI).
+
+3.  **¿Por qué las discrepancias? (Análisis de Resultados)**
+    Estamos comparando dos sistemas diferentes en un idioma que no vieron durante el *fine-tuning*:
+    * **Modelos Fine-tuned (DeBERTa, etc.):** Entrenados en `AG News` (Inglés). Aprendieron a "clasificar".
+    * **LLM Zero-Shot (`bart-large-mnli`):** Entrenado en `NLI` (Inglés). Aprendió a ver si una "premisa" (la noticia) "implica" una "hipótesis" (la etiqueta).
+
+    * **DeBERTa (F1: 0.8222):** Su alta puntuación sugiere que su arquitectura avanzada (`mdeberta-v3-base`) capturó el *concepto semántico* de las categorías (ej. qué "es" Business) de una forma que trasciende el idioma y la tarea.
+    * **DistilBERT (F1: 0.6667):** Tuvo un desempeño moderado.
+    * **RoBERTa (F1: 0.5556):** Tuvo el F1-Score más bajo, mostrando la mayor discrepancia. Esto sugiere que, aunque es multilingüe (`xlm-roberta-base`), su generalización *cross-lingual* en esta tarea fue menos robusta y su "lógica" de clasificación difirió significativamente de la del LLM Zero-Shot.
+    * 
 **Los siguientes resultados están basados en la comparación contra el LLM "Mock".**
 
 ### Resultados vs. LLM Mock
